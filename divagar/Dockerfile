@@ -8,22 +8,16 @@
 
 # CMD ["java", "-jar", "app.jar"]
 
-
-
-# Use a lightweight JDK image
-FROM openjdk:17-jdk-slim
-
-# Set working directory
+# Stage 1: Build the app
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-
-# Copy the project files
 COPY . .
+RUN mvn clean package -DskipTests
 
-# Build the Spring Boot app
-RUN ./mvnw clean package -DskipTests
-
-# Expose port 8080
+# Stage 2: Run the app
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/divagar-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
 
-# Run the Spring Boot jar
-CMD ["java", "-jar", "target/divagar-0.0.1-SNAPSHOT.jar"]
