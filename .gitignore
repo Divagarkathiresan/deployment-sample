@@ -8,9 +8,7 @@ dist/
 # uploads folder (if you don't want to push images/files)
 uploads/
 
-# Environment files
-.env
-*.env
+
 
 # OS / Editor files
 .DS_Store
