@@ -20,7 +20,7 @@ function UserForm({ onUserAdded }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/users', {
+      await axios.post('https://sample-deploy-atkk.onrender.com/api/users', {
         ...user,
         age: parseInt(user.age)
       });
